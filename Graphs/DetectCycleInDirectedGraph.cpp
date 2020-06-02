@@ -5,7 +5,7 @@ using namespace std;
 
 bool isCyclicUtil(vector<int> adj[],vector<bool> visited,int curr){
 if(visited[curr]==true) //The boundary case where we need to break;
-    return true;
+return true;
 visited[curr]=true;
 bool flag= false;
 for(int i=0;i<adj[curr].size();i++){
@@ -37,13 +37,12 @@ int main(){
     int e,v;
     cout<<"Enter NUmber of Vertices and Edges ";
     cin>>v>>e;
-
     vector<int>*adj=new vector<int>[v];
     for(int i=0;i<e;i++){
         cout<<"Enter src and dest ";
         int src,dest;
         cin>>src>>dest;
-        adj[src].push_back(dest);
+        adj[src-1].push_back(dest-1);
     }
    cout<< isCyclic(adj,v);
 }
