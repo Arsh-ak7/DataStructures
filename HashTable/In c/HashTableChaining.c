@@ -99,7 +99,7 @@ int main() {
         printf("%s\n",tableLookUp(lp)->name);
 	}
     deleteElement(127);
-    person p5 = {"nnb",127};
-	insIntoTable(&p5);
+    /*person p5 = {"nnb",127};
+	insIntoTable(&p5);*/
     printTable();
 }
