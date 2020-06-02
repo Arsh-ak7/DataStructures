@@ -2,36 +2,39 @@
 #include<vector>
 using namespace std;
 
-
-bool isCyclicUtil(vector<int> adj[],vector<bool> visited,int curr){
-if(visited[curr]==true)
-return true;
-visited[curr]=true;
+bool isCyclicUtil(vector<int> adj[],vector<int> visited,int curr){
+if(visited[curr]==2) //The Boundary case where we need to break;
+    return true;
+visited[curr]=1;
 bool flag= false;
 for(int i=0;i<adj[curr].size();i++){
+    if(visited[adj[curr][i]==1]){
+        visited[adj[curr][i]]=2;
+    }
+    else{
     flag=isCyclicUtil(adj,visited,i);
     if(flag==true)
     return true;
+    }
 }
 return false;
 }
 
 
 bool isCyclic(vector<int>adj[],int v){
-    vector<bool> visited(v,false);
+    vector<int> visited(v,0);
     bool flag=false;
     for(int i=0;i<v;i++){
-        visited[i]=true;
+        visited[i]=1;
         for(int j=0;j<adj[i].size();j++){
             flag=isCyclicUtil(adj,visited,adj[i][j]);
             if(flag==true)
             return true;
         }
-        visited[i]=false;
+        visited[i]=0;
     }
     return false;
 }
-
 
 int main(){
     int e,v;
@@ -44,6 +47,7 @@ int main(){
         int src,dest;
         cin>>src>>dest;
         adj[src].push_back(dest);
+        adj[dest].push_back(src);
     }
    cout<< isCyclic(adj,v);
 }
