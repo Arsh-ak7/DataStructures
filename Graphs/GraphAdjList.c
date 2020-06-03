@@ -37,7 +37,7 @@ void addEdge(struct Graph* graph, int src, int dest){
     struct AdjListNode* newNode= addAdjListNode(dest);
     newNode->next=graph->arr[src].head;
     graph->arr[src].head=newNode;
-
+    //For  Undirected Graph:
     newNode=addAdjListNode(src);
     newNode->next=graph->arr[dest].head;
     graph->arr[dest].head=newNode;
