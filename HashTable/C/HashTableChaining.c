@@ -49,11 +49,11 @@ person* tableLookUp(int num) {
 	int index = hashFunction(num);
 	person* temp=HashTable[index];
 	while(temp!=NULL){
-        temp=temp->next;
         if(temp->num==num){
             return temp;
             break;
         }
+        temp=temp->next;
 	}
 }
 
@@ -79,7 +79,7 @@ int main() {
 	initTable();
 	person p = {"nnb",7};
 	insIntoTable(&p);
-	person p1 = {"nnw",78 };
+	person p1 = {"nnw",77 };
 	insIntoTable(&p1);
 	person p2 = {"nn",976 };
 	insIntoTable(&p2);
