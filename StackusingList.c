@@ -63,3 +63,5 @@ int main()
 
 	return 0; 
 } 
+
+/* Time Complexity for all functions involved is O(1)*/
