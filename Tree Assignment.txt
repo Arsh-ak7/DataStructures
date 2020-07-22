@@ -1,0 +1,456 @@
+2.
+#include <stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+int search(int *arr,int start, int end, int val){
+    for(int i=start;i<end;i++){
+        if(arr[i]==val)
+        return i;
+    }
+    
+}
+
+struct Node* newnode(int data){
+    struct Node* node=(struct Node*)malloc(sizeof(struct Node));
+    node->data= data;
+    node->left=NULL;
+    node->right=NULL;
+    
+    return node;
+}
+
+
+struct Node* buildtreeipre(int *in,int *pre,int start,int end){
+    static int preIndex=0;
+    if (start > end) 
+        return NULL; 
+    struct Node* treeNode = newnode(pre[preIndex++]); 
+  
+    if (start == end) 
+        return treeNode; 
+  
+    int inIndex = search(in, start, end, treeNode->data); 
+  
+    treeNode->left = buildtreeipre(in, pre, start, inIndex - 1); 
+    treeNode->right = buildtreeipre(in, pre, inIndex + 1, end); 
+  
+    return treeNode; 
+} 
+
+void printInorder(struct Node* node){
+    if(node==NULL)
+    return;
+    
+    printInorder(node->left);
+    printf("%d ",node->data);
+    printInorder(node->right);
+}
+
+
+
+
+int main()
+{
+    int in[] = { 1, 2, 4, 3, 5, 6 }; 
+    int pre[] = { 3, 2, 1, 4, 6, 5 }; 
+    int len = sizeof(in) / sizeof(in[0]); 
+    struct Node* root = buildtreeipre(in, pre, 0, len - 1); 
+  
+    
+    printf("Inorder traversal of the constructed tree is \n"); 
+    printInorder(root); 
+    
+} 
+
+1.
+
+
+#include <stdio.h>
+#include<stdlib.h>
+
+struct Node{
+    int data;
+    struct Node* left;
+    struct Node* right;
+};
+
+int search(int *arr,int start, int end, int val){
+    for(int i=start;i<end;i++){
+        if(arr[i]==val)
+        return i;
+    }
+    
+}
+
+struct Node* newnode(int data){
+    struct Node* node=(struct Node*)malloc(sizeof(struct Node));
+    node->data= data;
+    node->left=NULL;
+    node->right=NULL;
+    
+    return node;
+}
+
+
+struct Node* buildUtil(int *in,int *pos,int start,int end,int *posIndex){
+     
+    if (start > end) 
+        return NULL; 
+    struct Node* treeNode = newnode(pos[(*posIndex)]);
+    (*posIndex)--;
+  
+    if (start == end) 
+        return treeNode; 
+  
+    int inIndex = search(in, start, end, treeNode->data); 
+  
+    treeNode->right = buildUtil(in, pos, inIndex + 1, end,posIndex); 
+    treeNode->left = buildUtil(in, pos, start, inIndex - 1,posIndex); 
+  
+    return treeNode; 
+} 
+
+struct Node* buildtreeipos(int* in, int* post, int n) 
+{ 
+    int pIndex = n - 1; 
+    return buildUtil(in, post, 0, n - 1, &pIndex); 
+} 
+
+void printInorder(struct Node* node){
+    if(node==NULL)
+    return;
+    
+    printInorder(node->left);
+    printf("%d ",node->data);
+    printInorder(node->right);
+}
+
+
+
+
+int main()
+{
+    int in[] = { 4, 8, 2, 5, 1, 6, 3, 7 }; 
+    int post[] = { 8, 4, 5, 2, 6, 7, 3, 1 }; 
+    int len = sizeof(in) / sizeof(in[0]); 
+    struct Node* root = buildtreeipos(in, post, len); 
+  
+    
+    printf("Inorder traversal of the constructed tree is \n"); 
+    printInorder(root); 
+    
+} 
+3.
+void printInorder(struct Node* node){
+    if(node==NULL)
+    return;
+    
+    printInorder(node->left);
+    printf("%d ",node->data);
+    printInorder(node->right);
+}
+
+4.
+void printPostOrder(struct Node* node){
+    if(node==NULL)
+    return;
+    
+printPostOrder(node->left);
+printPostOrder(node->right);
+printf("%d ",node->data);
+}
+
+5.
+void printPreOrder(struct Node* node){
+    if(node==NULL)
+    return;
+    
+    printf("%d ",node->data);
+    printPreOrder(node->left);
+    printPreOrder(node->right);
+}
+6.
+int maxKey(struct Node* node){
+    if(node==NULL)
+    return;
+    int res= node->data;
+    int left=maxKey(node->left);
+    int right=maxKey(node->right);
+    
+    if(left>res)
+    res=left;
+    if(right>res)
+    res=right;
+    
+    return res;
+    
+    
+}
+7.
+int minKey(struct Node* node){
+    if(node==NULL)
+    return;
+    int res= node->data;
+    int left=minKey(node->left);
+    int right=minKey(node->right);
+    
+    if(left<res)
+    res=left;
+    if(right<res)
+    res=right;
+    
+    return res;
+    
+}
+
+8.
+int search(int *arr,int start, int end, int val){
+    for(int i=start;i<end;i++){
+        if(arr[i]==val)
+        return i;
+    }
+    
+}
+
+9.
+int height(struct Node* node){
+    if(node==NULL)
+    return 0;
+    
+    else{
+    int lheight=height(node->left);
+    int rheight=height(node->right);
+    
+    if(lheight>rheight)
+    return lheight+1;
+    return rheight+1;
+    }
+}
+
+10.
+void mirror(struct Node* node)  
+{ 
+  if (node==NULL)  
+    return;   
+  else 
+  { 
+    struct Node* temp; 
+    mirror(node->left); 
+    mirror(node->right);
+    temp        = node->left; 
+    node->left  = node->right; 
+    node->right = temp; 
+  } 
+}  
+11.
+
+12.
+
+13.
+void deleteTree(struct Node* node)  
+{ 
+    if (node == NULL) return; 
+    deleteTree(node->left); 
+    deleteTree(node->right);
+    printf("\n Deleting node: %d", node->data); 
+    free(node); 
+}  
+
+14.
+struct Node * inOrderPredecessor(struct Node *root, struct Node *node) 
+{
+    if( node->left != NULL ) 
+        return maxValue(node->left); 
+  
+    struct Node *pred = NULL; 
+    while (root != NULL) 
+    { 
+        if (node->data > root->data) 
+        { 
+            pred = root; 
+            root = root->right; 
+        } 
+        else if (node->data < root->data) 
+            root = root->left; 
+        else
+           break; 
+    } 
+  
+    return pred; 
+} 
+
+
+
+
+15.
+struct Node * inOrderSuccessor(struct Node *root, struct Node *node) 
+{
+    if( node->right != NULL ) 
+        return minValue(node->right); 
+  
+    struct Node *succ = NULL; 
+    while (root != NULL) 
+    { 
+        if (node->data < root->data) 
+        { 
+            succ = root; 
+            root = root->left; 
+        } 
+        else if (node->data > root->data) 
+            root = root->right; 
+        else
+           break; 
+    } 
+  
+    return succ; 
+} 
+
+16.
+ int getLeafCount(struct Node* node) 
+{ 
+  if(node == NULL)        
+    return 0; 
+  if(node->left == NULL && node->right==NULL)       
+    return 1;             
+  else 
+    return getLeafCount(node->left)+ 
+           getLeafCount(node->right);       
+} 
+
+17.
+int countNonleaf(struct Node* root) 
+{ 
+  
+    if (root == NULL || (root->left == NULL &&  
+                         root->right == NULL)) 
+        return 0; 
+    return 1 + countNonleaf(root->left) +  
+               countNonleaf(root->right); 
+} 
+
+18.
+void printLeafNodes(struct Node* node){
+if(node==NULL)
+return;
+
+if(node->right==NULL&&node->left==NULL)
+printf("%d ",node->data);
+if(root->left)
+printLeafNodes(root->left);
+if(root->right)
+printLeafNodes(root->right);
+
+}
+
+19.
+
+void printNonLeaf(struct Node* node){
+if(node==NULL)
+return;
+}
+
+20.
+struct Node* insert(struct Node *node,int key){
+if(node==NULL)
+return newNode(key);
+if(node->data<key)
+node->right= insert(node->right,key);
+else if(node->data>key)
+node->left=insert(node->left,key);
+
+return node;
+}
+
+21.
+
+struct Node *insertiterative(struct Node *node, int key){
+struct Node* newnode=newNode(key);
+struct Node* x= node;
+struct Node* y= NULL;
+while (x != NULL) { 
+        y = x; 
+        if (key < x->key) 
+            x = x->left; 
+        else
+            x = x->right; 
+    }
+    if (y == NULL) 
+        y = newnode; 
+    else if (key < y->key) 
+        y->left = newnode; 
+      else
+        y->right = newnode; 
+    return y; 
+} 
+
+22.
+
+int max(struct Node* root){
+while(root->right!=NULL)
+root=root->right;
+
+return root->data;
+}
+23.
+
+int min(struct Node* root){
+while(root->left!=NULL)
+root=root->left;
+
+return root->data;
+}
+
+25.
+
+struct Node* delete(struct Node* node, int key){
+if(node==NULL)
+return root;
+
+if(node->data<key)
+node->right=delete(node->right,key);
+else if(node->data>key)
+node->left=delete(node->left,key);
+
+else{
+if(node->left==NULL)
+{
+struct Node* temp=node->right;
+free(node);
+return temp;
+}
+else if(node->right==NULL)
+{
+struct Node* tenp=node->left;
+free(node);
+return temp;
+}
+
+struct Node* temp=min(node->right);
+node->data=temp->data;
+node->right=delete(node->right,key);
+
+}
+return node;
+
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
